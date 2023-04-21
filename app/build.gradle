@@ -4,6 +4,8 @@ plugins {
     id "kotlin-kapt"
     id 'kotlin-android'
     id 'com.google.dagger.hilt.android'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 
@@ -18,6 +20,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //renderscript for blur
+        renderscriptTargetApi 22
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -46,6 +52,15 @@ dependencies {
     def coroutines_version = '1.5.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+    //navigation component
+    def nav_version = "2.4.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.44"
