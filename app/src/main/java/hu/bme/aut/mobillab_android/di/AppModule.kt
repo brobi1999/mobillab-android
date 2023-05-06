@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationCompenent (i.e. everywhere in the application)
+    @Singleton
     @Provides
     fun providePokeDatabase(
         @ApplicationContext app: Context
@@ -30,20 +30,19 @@ object AppModule {
         app,
         PokemonDatabase::class.java,
         "pokedex-db"
-    ).build() // The reason we can construct a database for the repo
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides
-    fun providePokemonDao(db: PokemonDatabase) = db.pokemonDao()
+    fun provideAccountDao(db: PokemonDatabase) = db.accountDao()
 
     @IoDispatcher
     @Provides
     fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    fun provideAnalyticsService(): PokeApi {
-        // todo
-        val baseUrl = ""
+    fun providePokeApi(): PokeApi {
+        val baseUrl = "https://pokeapi.co/api/v2/"
 
         val okHttpClient = OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
