@@ -7,23 +7,21 @@ import hu.bme.aut.mobillab_android.network.PokeApi
 
 class MockPokeApi: PokeApi {
 
-    companion object{
-        val pokemonList = PokeList(
-            results = listOf(
-                PokeResult("pidgey", "https://pokeapi.co/api/v2/pokemon/16/"),
-                PokeResult("charmander", "https://pokeapi.co/api/v2/pokemon/4/"),
-                PokeResult("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"),
-                PokeResult("rattata", "https://pokeapi.co/api/v2/pokemon/19/")
-            ),
-        )
-        val pokemonDetailList = listOf<PokeDetail>(
-            PokeDetail(id = 16, name = "pidgey"),
-            PokeDetail(id = 4, name = "charmander"),
-            PokeDetail(id = 1, name = "bulbasaur"),
-            PokeDetail(id = 19, name = "rattata")
+    val pokemonList = PokeList(
+        results = listOf(
+            PokeResult("pidgey", "https://pokeapi.co/api/v2/pokemon/16/"),
+            PokeResult("charmander", "https://pokeapi.co/api/v2/pokemon/4/"),
+            PokeResult("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"),
+            PokeResult("rattata", "https://pokeapi.co/api/v2/pokemon/19/")
+        ),
+    )
+    val pokemonDetailList = listOf<PokeDetail>(
+        PokeDetail(id = 16, name = "pidgey"),
+        PokeDetail(id = 4, name = "charmander"),
+        PokeDetail(id = 1, name = "bulbasaur"),
+        PokeDetail(id = 19, name = "rattata")
 
-        )
-    }
+    )
 
     override suspend fun addToFavourites(pokemonId: Int, accountName: String) {
         return

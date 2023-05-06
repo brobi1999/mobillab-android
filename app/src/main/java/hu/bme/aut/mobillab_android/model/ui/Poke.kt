@@ -1,7 +1,10 @@
 package hu.bme.aut.mobillab_android.model.ui
 
+import android.os.Parcelable
 import hu.bme.aut.mobillab_android.model.domain.PokeDetail
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Poke (
     val id: Int,
     val name: String? = null,
@@ -16,7 +19,7 @@ data class Poke (
     val typeSlotOne: String? = null,
     val typeSlotTwo: String? = null,
     var isFavourite: Boolean = false
-){
+): Parcelable {
     companion object{
         fun convertDomainPokeDetailToUiPoke(pokeDetail: PokeDetail): Poke {
             var hp = 0

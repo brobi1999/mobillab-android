@@ -8,4 +8,4 @@ object Ongoing : RequestState()
 
 object Finished : RequestState()
 
-object Error : RequestState()
+data class Error(val msg: String?) : RequestState()

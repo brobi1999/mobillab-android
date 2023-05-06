@@ -17,17 +17,17 @@ interface AccountDao {
         val account = getAccountWithDeletedIdsAndFavouriteIds(username) ?: throw RuntimeException("Account not found.")
         if(account.favIds.map { it.favId }.contains(pokemonId))
             throw RuntimeException("The pokemon with the specified id is already in the favourites list of the account.")
-        insertFavouriteIds(FavouriteId(favId = pokemonId, containerUsername = username))
+        insertFavouriteId(pokemonId, username)
     }
 
-    @Insert
-    suspend fun insertFavouriteIds(favId: FavouriteId)
+    @Query("INSERT INTO favouriteid (favId, containerUsername) VALUES (:favId, :containerUsername)")
+    suspend fun insertFavouriteId(favId: Int, containerUsername: String)
 
-    @Delete
-    suspend fun deleteFavouriteId(favId: FavouriteId)
+    @Query("DELETE FROM favouriteid WHERE favId = :favId AND containerUsername = :containerUsername")
+    suspend fun deleteFavouriteId(favId: Int, containerUsername: String)
 
-    @Insert
-    suspend fun insertDeletedIds(delIds: DeletedId)
+    @Query("INSERT INTO deletedid (delId, containerUsername) VALUES (:delId, :containerUsername)")
+    suspend fun insertDeletedIds(delId: Int, containerUsername: String)
 
     @Transaction
     @Query("SELECT * FROM accounts WHERE username = :username")
@@ -38,15 +38,15 @@ interface AccountDao {
         val account = getAccountWithDeletedIdsAndFavouriteIds(username) ?: throw RuntimeException("Account not found.")
         if(!account.favIds.map { it.favId }.contains(pokemonId))
             return
-        deleteFavouriteId(FavouriteId(favId = pokemonId, containerUsername = username))
+        deleteFavouriteId(pokemonId, username)
     }
 
     @Transaction
     suspend fun deletePokemon(username: String, pokemonId: Int) {
         val account = getAccountWithDeletedIdsAndFavouriteIds(username) ?: throw RuntimeException("Account not found.")
-        if(!account.delIds.map { it.delId }.contains(pokemonId))
+        if(account.delIds.map { it.delId }.contains(pokemonId))
             return
-        insertDeletedIds(DeletedId(delId = pokemonId, containerUsername = username))
+        insertDeletedIds(pokemonId, username)
     }
 
     @Query("SELECT * FROM accounts WHERE username = :username LIMIT 1")

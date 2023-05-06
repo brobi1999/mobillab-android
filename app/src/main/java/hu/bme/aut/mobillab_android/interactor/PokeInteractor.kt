@@ -50,6 +50,7 @@ class PokeInteractor @Inject constructor(
         else accountDao.insertOne(
             Account(username = accountName)
         )
+        (context as PokeApplication).currentUsername = accountName
     }
 
     suspend fun removePokemon(pokemonId: Int) = withContext(defaultDispatcher){
@@ -61,7 +62,9 @@ class PokeInteractor @Inject constructor(
             ?: throw RuntimeException("Current user is not set.")
     }
 
-    fun login(accountName: String){
+    suspend fun login(accountName: String) = withContext(defaultDispatcher){
+        val account = accountDao.getAccountByUsername(accountName)
+            ?: throw RuntimeException("There is no such account.")
         (context as PokeApplication).currentUsername = accountName
     }
 

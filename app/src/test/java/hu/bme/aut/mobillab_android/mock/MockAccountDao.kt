@@ -7,14 +7,12 @@ import hu.bme.aut.mobillab_android.model.db.DeletedId
 import hu.bme.aut.mobillab_android.model.db.FavouriteId
 
 class MockAccountDao: AccountDao {
-    companion object{
-        val accounts = mutableListOf(
-            AccountWithDeletedIdsAndFavouriteIds(Account("user1"),
-                favIds = listOf(4, 1).map { FavouriteId(it, "user1") },
-                delIds = listOf(16).map { DeletedId(it, "user1") },
-            )
+    val accounts = mutableListOf(
+        AccountWithDeletedIdsAndFavouriteIds(Account("user1"),
+            favIds = listOf(4, 1).map { FavouriteId(it, "user1") },
+            delIds = listOf(16).map { DeletedId(it, "user1") },
         )
-    }
+    )
 
     override suspend fun insertOne(account: Account) {
         accounts.add(AccountWithDeletedIdsAndFavouriteIds(Account(account.username),
@@ -29,15 +27,15 @@ class MockAccountDao: AccountDao {
         accounts.find { it.account.username == username }!!.favIds = mutableList
     }
 
-    override suspend fun insertFavouriteIds(favId: FavouriteId){
+    override suspend fun insertFavouriteId(favId: Int, containerUsername: String){
         return
     }
 
-    override suspend fun deleteFavouriteId(favId: FavouriteId){
+    override suspend fun deleteFavouriteId(favId: Int, containerUsername: String){
         return
     }
 
-    override suspend fun insertDeletedIds(delIds: DeletedId){
+    override suspend fun insertDeletedIds(delId: Int, containerUsername: String){
         return
     }
 
@@ -58,7 +56,7 @@ class MockAccountDao: AccountDao {
     }
 
     override suspend fun getAccountByUsername(username: String): Account?{
-        return accounts.find { it.account.username == username }!!.account
+        return accounts.find { it.account.username == username }?.account
     }
 
 

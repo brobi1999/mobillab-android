@@ -1,20 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    tools:context=".ui.login.LoginFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="login"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnNavigate"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:text="navigate" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:text="@string/welcome"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/what_is_your_name" />
+
+
+        <com.google.android.material.card.MaterialCardView style="@style/pokeCardViewStyle">
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:text="@string/name" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/pokeContainerCardViewStyle"
+            android:layout_marginTop="100dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveAccount"
+                style="@style/pokeButtonStyle"
+                android:text="@string/save_my_account" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/pokeContainerCardViewStyle"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogin"
+                style="@style/pokeButtonStyle"
+                android:text="@string/i_have_an_account" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:text="@string/auth_error"
+            android:textColor="@color/red" />
+
+
+    </LinearLayout>
+
+
+<ProgressBar
+    android:id="@+id/progressBar_cyclic"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="80dp"
+    android:minWidth="80dp"
+    android:visibility="gone"
+    android:translationZ="2dp"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
